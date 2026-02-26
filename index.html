@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Song 💛</title>
+<style>
+body {
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.container {
+  background-color: #1e1e1e;
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+img {
+  width: 250px;
+  border-radius: 15px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #1DB954;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+var password = prompt("Enter password:");
+if (password !== "110323") {
+  document.body.innerHTML = "womp womp,try again (except if you're not my monkey, then BYE)";
+}
+</script>
+
+<div class="container">
+  <img src="https://via.placeholder.com/250" alt="Album Cover">
+  <h2>Our Song</h2>
+  <p>You + Me 💛</p>
+
+  <audio id="song">
+    <source src="PUT-YOUR-AUDIO-LINK-HERE.mp3" type="audio/mpeg">
+  </audio>
+
+  <button onclick="playSong()">Play ▶</button>
+</div>
+
+<script>
+function playSong() {
+  var audio = document.getElementById("song");
+  audio.play();
+}
+</script>
+
+</body>
+</html>
