@@ -9,8 +9,9 @@
     --bg:#dff1ff;       /* light blue page background */
     --card:#f7fbff;     /* card background */
     --accent:#1DB954;   /* play button green */
-    --muted:#9aa7b3;
+    --muted:#7f8b92;
     --shadow: 0 10px 30px rgba(15,23,42,0.12);
+    --black:#0b0b0b;
   }
   html,body{
     height:100%;
@@ -19,7 +20,7 @@
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
     background: var(--bg);
-    color:#071019;
+    color:var(--black);
   }
 
   /* center page on phone and desktop */
@@ -36,14 +37,14 @@
   .card {
     width:100%;
     max-width:420px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--card));
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card));
     border-radius:28px;
     box-shadow: var(--shadow);
     padding:18px;
     box-sizing:border-box;
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:12px;
   }
 
   .cover {
@@ -55,27 +56,25 @@
     justify-content:center;
     align-items:center;
   }
+  /* make image smaller (not full height) and keep it responsive */
   .cover img{
-    width:100%;
-    height:auto;
-    display:block;
+    width:90%;
+    max-width:320px;
+    height:280px;
     object-fit:cover;
+    display:block;
+    border-radius:12px;
+    box-shadow: 0 6px 18px rgba(10,15,25,0.06);
   }
 
   .meta {
-    padding:8px 6px 0 6px;
+    padding:4px 6px 0 6px;
   }
   .title {
     font-size:20px;
-    font-weight:700;
-    margin:8px 0 6px 0;
+    font-weight:800;
+    margin:8px 0 2px 0;
     text-align:center;
-  }
-  .subtitle{
-    font-size:14px;
-    color:var(--muted);
-    text-align:center;
-    margin-bottom:8px;
   }
 
   /* playback container */
@@ -89,7 +88,7 @@
     gap:12px;
   }
 
-  /* time box row (small box showing current time and duration) */
+  /* time box row (small box showing current time and time left) */
   .time-row {
     display:flex;
     justify-content:space-between;
@@ -99,15 +98,15 @@
   .time-box {
     background:white;
     border-radius:10px;
-    padding:8px 12px;
+    padding:10px 12px;
     box-shadow: 0 4px 14px rgba(10,15,25,0.06);
-    font-weight:600;
+    font-weight:700;
     font-size:14px;
     display:flex;
     align-items:center;
-    gap:12px;
+    justify-content:space-between;
   }
-  .time-text { min-width:44px; text-align:center; color:#24323a; }
+  .time-text { min-width:44px; text-align:center; color:var(--black); }
 
   /* progress bar */
   .progress {
@@ -129,14 +128,16 @@
   }
   input[type="range"]::-webkit-slider-thumb{
     -webkit-appearance:none;
-    width:16px;height:16px;border-radius:50%;
-    background:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.2); margin-top:-4px;
+    appearance:none;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.2); margin-top:-3px;
   }
   input[type="range"]::-moz-range-thumb{
-    width:16px;height:16px;border-radius:50%; background:var(--accent);
+    width:14px;height:14px;border-radius:50%; background:var(--accent);
   }
+  input[type="range"]::-webkit-slider-runnable-track { height:8px; background:transparent; }
 
-  /* controls row */
+  /* controls row: single set */
   .controls {
     display:flex;
     justify-content:center;
@@ -144,29 +145,29 @@
     gap:18px;
   }
   .btn {
-    width:48px; height:48px; border-radius:50%;
+    width:52px; height:52px; border-radius:50%;
     background:white; border:none; display:inline-flex; align-items:center; justify-content:center;
     box-shadow:0 6px 14px rgba(10,15,25,0.06);
     cursor:pointer; font-size:18px;
+    color:var(--black);
   }
   .btn.play {
-    width:68px; height:68px; background:linear-gradient(180deg,#fff,#f3fff6);
+    width:74px; height:74px; background:linear-gradient(180deg,#fff,#f3fff6);
     border-radius:50%;
-    box-shadow: 0 10px 30px rgba(27,185,76,0.15);
+    box-shadow: 0 10px 30px rgba(27,185,76,0.12);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
   }
 
-  /* icons (simple) */
-  .icon {
-    font-size:18px;
-    pointer-events:none;
-  }
+  .btn svg { width:22px; height:22px; fill:var(--black); pointer-events:none; }
 
   /* small screen tweaks */
   @media (max-width:420px){
     .card { padding:14px; border-radius:20px; }
     .title{ font-size:18px; }
     .btn { width:44px;height:44px; }
-    .btn.play { width:64px;height:64px; }
+    .btn.play { width:64px;height:64px; font-size:24px; }
+    .cover img { height:240px; }
   }
 
   /* password overlay: centered modal */
@@ -189,7 +190,7 @@
 <div id="pw-overlay">
   <div class="pw-modal" role="dialog" aria-modal="true" aria-labelledby="pw-title">
     <h3 id="pw-title">Enter password to view</h3>
-    <input id="pw-input" type="password" placeholder="Password" />
+    <input id="pw-input" type="password" placeholder="Password" autocomplete="off" />
     <div style="display:flex; gap:8px; justify-content:center;">
       <button id="pw-submit">Unlock</button>
     </div>
@@ -200,36 +201,44 @@
 <!-- SITE content -- hidden while pw overlay visible -->
 <div class="page-wrap" id="site" aria-hidden="true" style="display:none;">
   <div class="card" role="main">
-    <div class="cover">
+    <div class="cover" aria-hidden="false">
       <img id="cover-img" src="My_sunshine.JPG" alt="For my sunshine cover">
     </div>
 
     <div class="meta">
       <div class="title">For my sunshine ☀️</div>
-      <div class="subtitle">You + Me</div>
 
-      <div class="player">
-        <!-- time row: left = current, right = duration -->
+      <div class="player" aria-live="polite">
+        <!-- time row: left = current time listened, right = time left -->
         <div class="time-row">
-          <div class="time-box">
+          <div class="time-box" aria-hidden="false">
             <div class="time-text" id="curtime">0:00</div>
             <div style="width:8px;height:8px;background:var(--muted);border-radius:50%;"></div>
-            <div class="time-text" id="durtime">0:00</div>
+            <div class="time-text" id="remtime">-0:00</div>
           </div>
         </div>
 
         <!-- progress slider -->
         <div class="progress" aria-hidden="false">
-          <input id="seek" type="range" min="0" max="100" value="0" />
+          <input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek bar" />
         </div>
 
-        <!-- controls -->
+        <!-- controls: Back 10s / Play / Forward 10s -->
         <div class="controls" role="group" aria-label="Playback controls">
-          <button class="btn" id="back5" title="Back 5s">⏪</button>
-          <button class="btn" id="rew5" title="Back 5s small">⏮</button>
-          <button class="btn play" id="playpause" title="Play / Pause">▶</button>
-          <button class="btn" id="fwd5" title="Forward 5s small">⏭</button>
-          <button class="btn" id="ff5" title="Forward 5s">⏩</button>
+          <button class="btn" id="back10" title="Back 10 seconds" aria-label="Back 10 seconds">
+            <!-- simple double-left icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12L20 4v16l-9-8zM4 4h2v16H4z"></path></svg>
+          </button>
+
+          <button class="btn play" id="playpause" title="Play / Pause" aria-label="Play or pause">
+            <!-- inner text will change (▶ / ❚❚) -->
+            ▶
+          </button>
+
+          <button class="btn" id="fwd10" title="Forward 10 seconds" aria-label="Forward 10 seconds">
+            <!-- simple double-right icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4v16l9-8-9-8zm9 0h2v16h-2z"></path></svg>
+          </button>
         </div>
 
       </div>
@@ -246,9 +255,6 @@
 <script>
 /* ===== PASSWORD LOGIC =====
    - site content (#site) is hidden until correct password entered
-   - overlay (#pw-overlay) blocks everything and cannot be bypassed via source view
-   - wrong attempts show error and keep site hidden
-   NOTE: This is client-side protection (sufficient for light privacy). Not cryptographically secure.
 */
 (function(){
   const PASSWORD = "110323"; // change here if you want a different password
@@ -259,12 +265,15 @@
   const err = document.getElementById('pw-error');
 
   function unlock() {
-    const val = input.value || "";
+    const val = (input.value || "").trim();
     if (val === PASSWORD) {
       overlay.style.display = 'none';
       site.style.display = 'flex';
       site.removeAttribute('aria-hidden');
+      // move focus to play button for accessibility
+      document.getElementById('playpause').focus();
     } else {
+      // show error and keep content hidden
       err.style.display = 'block';
       input.value = '';
       input.focus();
@@ -274,7 +283,7 @@
   submit.addEventListener('click', unlock);
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') unlock(); });
 
-  // optional: allow closing overlay if user knows the secret in URL hash ?pw=110323
+  // optional: unlock by URL hash like #pw=110323
   if (window.location.hash) {
     const hash = decodeURIComponent(window.location.hash.replace('#',''));
     if (hash.startsWith('pw=')) {
@@ -289,79 +298,88 @@
 
 /* ===== PLAYER LOGIC =====
    - play/pause
-   - update time display and duration
+   - update time listened (left) and time left (right)
    - seek slider
-   - back/forward 5s controls
+   - back/forward 10s controls
 */
 (function(){
   const audio = document.getElementById('song');
   const playBtn = document.getElementById('playpause');
   const curtime = document.getElementById('curtime');
-  const durtime = document.getElementById('durtime');
+  const remtime = document.getElementById('remtime');
   const seek = document.getElementById('seek');
-  const back5 = document.getElementById('back5');
-  const ff5 = document.getElementById('ff5');
-  const rew5 = document.getElementById('rew5');
-  const fwd5 = document.getElementById('fwd5');
+  const back10 = document.getElementById('back10');
+  const fwd10 = document.getElementById('fwd10');
 
   // format seconds -> M:SS
   function fmt(s){
-    if(isNaN(s)) return "0:00";
-    s = Math.floor(s);
+    if(isNaN(s) || s === Infinity) return "0:00";
+    s = Math.max(0, Math.floor(s));
     const m = Math.floor(s/60);
     const sec = s % 60;
     return m + ":" + (sec<10 ? "0"+sec : sec);
   }
 
-  // update slider max when metadata loaded
+  function fmtRemaining(total, current){
+    if(isNaN(total) || total === Infinity) return "-0:00";
+    const rem = Math.max(0, Math.floor(total - current));
+    return "-" + fmt(rem);
+  }
+
+  // metadata loaded (duration known)
   audio.addEventListener('loadedmetadata', () => {
-    seek.max = Math.floor(audio.duration);
-    durtime.textContent = fmt(audio.duration);
+    seek.max = Math.floor(audio.duration) || 0;
+    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
   });
 
   // update UI as audio plays
   audio.addEventListener('timeupdate', () => {
     curtime.textContent = fmt(audio.currentTime);
+    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
     seek.value = Math.floor(audio.currentTime);
   });
 
   // play/pause toggle
-  let isPlaying = false;
-  function togglePlay(){
-    if(audio.paused){
-      audio.play();
+  function setPlayState(playing){
+    if(playing){
       playBtn.textContent = "❚❚"; // pause icon
-      isPlaying = true;
+      playBtn.setAttribute('aria-pressed','true');
     } else {
-      audio.pause();
       playBtn.textContent = "▶";
-      isPlaying = false;
+      playBtn.setAttribute('aria-pressed','false');
     }
   }
-  playBtn.addEventListener('click', togglePlay);
+
+  playBtn.addEventListener('click', () => {
+    if(audio.paused){
+      audio.play().catch(()=>{ /* autoplay blocked */ });
+      setPlayState(true);
+    } else {
+      audio.pause();
+      setPlayState(false);
+    }
+  });
 
   // slider interaction
   seek.addEventListener('input', () => {
     audio.currentTime = Number(seek.value);
+    // update immediately
+    curtime.textContent = fmt(audio.currentTime);
+    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
   });
 
-  // back and forward 5s
+  // back/forward 10s
   function moveBy(sec){
     let t = audio.currentTime + sec;
     if (t < 0) t = 0;
-    if (t > audio.duration) t = audio.duration;
+    if (audio.duration && t > audio.duration) t = audio.duration;
     audio.currentTime = t;
   }
-  back5.addEventListener('click', ()=> moveBy(-10));  // big back
-  rew5.addEventListener('click', ()=> moveBy(-5));    // back 5s
-  fwd5.addEventListener('click', ()=> moveBy(5));     // forward 5s
-  ff5.addEventListener('click', ()=> moveBy(10));     // big forward
+  back10.addEventListener('click', ()=> moveBy(-10));
+  fwd10.addEventListener('click', ()=> moveBy(10));
 
-  // pause when audio ends
-  audio.addEventListener('ended', () => {
-    playBtn.textContent = "▶";
-    isPlaying = false;
-  });
+  // when audio ends, reset play button
+  audio.addEventListener('ended', () => setPlayState(false));
 })();
 </script>
 </body>
