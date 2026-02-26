@@ -1,70 +1,368 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Our Song 💛</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>For my sunshine ☀️</title>
 <style>
-body {
-  background-color: #111;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding-top: 50px;
-}
+  :root{
+    --bg:#dff1ff;       /* light blue page background */
+    --card:#f7fbff;     /* card background */
+    --accent:#1DB954;   /* play button green */
+    --muted:#9aa7b3;
+    --shadow: 0 10px 30px rgba(15,23,42,0.12);
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    background: var(--bg);
+    color:#071019;
+  }
 
-.container {
-  background-color: #1e1e1e;
-  width: 300px;
-  margin: auto;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.1);
-}
+  /* center page on phone and desktop */
+  .page-wrap{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 12px;
+    box-sizing:border-box;
+  }
 
-img {
-  width: 250px;
-  border-radius: 15px;
-}
+  /* main card that fills phone screen nicely */
+  .card {
+    width:100%;
+    max-width:420px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--card));
+    border-radius:28px;
+    box-shadow: var(--shadow);
+    padding:18px;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
 
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  background-color: #1DB954;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
+  .cover {
+    width:100%;
+    border-radius:16px;
+    overflow:hidden;
+    background: #e6eef6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .cover img{
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:cover;
+  }
+
+  .meta {
+    padding:8px 6px 0 6px;
+  }
+  .title {
+    font-size:20px;
+    font-weight:700;
+    margin:8px 0 6px 0;
+    text-align:center;
+  }
+  .subtitle{
+    font-size:14px;
+    color:var(--muted);
+    text-align:center;
+    margin-bottom:8px;
+  }
+
+  /* playback container */
+  .player {
+    margin-top:6px;
+    background: #eef6fb;
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  /* time box row (small box showing current time and duration) */
+  .time-row {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+  }
+  .time-box {
+    background:white;
+    border-radius:10px;
+    padding:8px 12px;
+    box-shadow: 0 4px 14px rgba(10,15,25,0.06);
+    font-weight:600;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .time-text { min-width:44px; text-align:center; color:#24323a; }
+
+  /* progress bar */
+  .progress {
+    width:100%;
+    height:8px;
+    background:rgba(0,0,0,0.06);
+    border-radius:999px;
+    position:relative;
+    overflow:hidden;
+  }
+  .progress > input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    background:transparent;
+    position:relative;
+    height:8px;
+    margin:0;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,0.2); margin-top:-4px;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%; background:var(--accent);
+  }
+
+  /* controls row */
+  .controls {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+  }
+  .btn {
+    width:48px; height:48px; border-radius:50%;
+    background:white; border:none; display:inline-flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 14px rgba(10,15,25,0.06);
+    cursor:pointer; font-size:18px;
+  }
+  .btn.play {
+    width:68px; height:68px; background:linear-gradient(180deg,#fff,#f3fff6);
+    border-radius:50%;
+    box-shadow: 0 10px 30px rgba(27,185,76,0.15);
+  }
+
+  /* icons (simple) */
+  .icon {
+    font-size:18px;
+    pointer-events:none;
+  }
+
+  /* small screen tweaks */
+  @media (max-width:420px){
+    .card { padding:14px; border-radius:20px; }
+    .title{ font-size:18px; }
+    .btn { width:44px;height:44px; }
+    .btn.play { width:64px;height:64px; }
+  }
+
+  /* password overlay: centered modal */
+  #pw-overlay {
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.35);
+    z-index:9999;
+  }
+  .pw-modal {
+    background:white; padding:18px; border-radius:12px; width:92%; max-width:360px; text-align:center;
+  }
+  .pw-modal h3 { margin:0 0 8px 0; color:#071019; }
+  .pw-modal input { width:100%; padding:10px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:10px; }
+  .pw-modal button { padding:10px 14px; border-radius:8px; border:none; background:var(--accent); color:white; font-weight:700; cursor:pointer; }
+  .pw-error { color:#b00020; font-weight:600; margin-top:8px; display:none; }
 </style>
 </head>
-
 <body>
 
-<script>
-var password = prompt("Enter password:");
-if (password !== "110323") {
-  document.body.innerHTML = "womp womp,try again (except if you're not my monkey, then BYE)";
-}
-</script>
-
-<div class="container">
-  <img src="My_sunshine.JPG" alt="Album Cover">
-  <h2>Our Song</h2>
-  <p>You + Me 💛</p>
-
-  <audio id="song">
-    <source src="Sun.m4a" type="audio/mpeg">
-  </audio>
-
-  <button onclick="playSong()">Play ▶</button>
+<!-- PASSWORD OVERLAY: content blocked until correct password entered -->
+<div id="pw-overlay">
+  <div class="pw-modal" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <h3 id="pw-title">Enter password to view</h3>
+    <input id="pw-input" type="password" placeholder="Password" />
+    <div style="display:flex; gap:8px; justify-content:center;">
+      <button id="pw-submit">Unlock</button>
+    </div>
+    <div id="pw-error" class="pw-error">Wrong password. If you're supposed to see this, try again.</div>
+  </div>
 </div>
 
-<script>
-function playSong() {
-  var audio = document.getElementById("song");
-  audio.play();
-}
-</script>
+<!-- SITE content -- hidden while pw overlay visible -->
+<div class="page-wrap" id="site" aria-hidden="true" style="display:none;">
+  <div class="card" role="main">
+    <div class="cover">
+      <img id="cover-img" src="My_sunshine.JPG" alt="For my sunshine cover">
+    </div>
 
+    <div class="meta">
+      <div class="title">For my sunshine ☀️</div>
+      <div class="subtitle">You + Me</div>
+
+      <div class="player">
+        <!-- time row: left = current, right = duration -->
+        <div class="time-row">
+          <div class="time-box">
+            <div class="time-text" id="curtime">0:00</div>
+            <div style="width:8px;height:8px;background:var(--muted);border-radius:50%;"></div>
+            <div class="time-text" id="durtime">0:00</div>
+          </div>
+        </div>
+
+        <!-- progress slider -->
+        <div class="progress" aria-hidden="false">
+          <input id="seek" type="range" min="0" max="100" value="0" />
+        </div>
+
+        <!-- controls -->
+        <div class="controls" role="group" aria-label="Playback controls">
+          <button class="btn" id="back5" title="Back 5s">⏪</button>
+          <button class="btn" id="rew5" title="Back 5s small">⏮</button>
+          <button class="btn play" id="playpause" title="Play / Pause">▶</button>
+          <button class="btn" id="fwd5" title="Forward 5s small">⏭</button>
+          <button class="btn" id="ff5" title="Forward 5s">⏩</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- audio (local file in repo) -->
+<audio id="song" preload="metadata">
+  <source src="My_sunshine.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+/* ===== PASSWORD LOGIC =====
+   - site content (#site) is hidden until correct password entered
+   - overlay (#pw-overlay) blocks everything and cannot be bypassed via source view
+   - wrong attempts show error and keep site hidden
+   NOTE: This is client-side protection (sufficient for light privacy). Not cryptographically secure.
+*/
+(function(){
+  const PASSWORD = "110323"; // change here if you want a different password
+  const overlay = document.getElementById('pw-overlay');
+  const site = document.getElementById('site');
+  const input = document.getElementById('pw-input');
+  const submit = document.getElementById('pw-submit');
+  const err = document.getElementById('pw-error');
+
+  function unlock() {
+    const val = input.value || "";
+    if (val === PASSWORD) {
+      overlay.style.display = 'none';
+      site.style.display = 'flex';
+      site.removeAttribute('aria-hidden');
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  submit.addEventListener('click', unlock);
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') unlock(); });
+
+  // optional: allow closing overlay if user knows the secret in URL hash ?pw=110323
+  if (window.location.hash) {
+    const hash = decodeURIComponent(window.location.hash.replace('#',''));
+    if (hash.startsWith('pw=')) {
+      if (hash.slice(3) === PASSWORD) {
+        overlay.style.display = 'none';
+        site.style.display = 'flex';
+        site.removeAttribute('aria-hidden');
+      }
+    }
+  }
+})();
+
+/* ===== PLAYER LOGIC =====
+   - play/pause
+   - update time display and duration
+   - seek slider
+   - back/forward 5s controls
+*/
+(function(){
+  const audio = document.getElementById('song');
+  const playBtn = document.getElementById('playpause');
+  const curtime = document.getElementById('curtime');
+  const durtime = document.getElementById('durtime');
+  const seek = document.getElementById('seek');
+  const back5 = document.getElementById('back5');
+  const ff5 = document.getElementById('ff5');
+  const rew5 = document.getElementById('rew5');
+  const fwd5 = document.getElementById('fwd5');
+
+  // format seconds -> M:SS
+  function fmt(s){
+    if(isNaN(s)) return "0:00";
+    s = Math.floor(s);
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return m + ":" + (sec<10 ? "0"+sec : sec);
+  }
+
+  // update slider max when metadata loaded
+  audio.addEventListener('loadedmetadata', () => {
+    seek.max = Math.floor(audio.duration);
+    durtime.textContent = fmt(audio.duration);
+  });
+
+  // update UI as audio plays
+  audio.addEventListener('timeupdate', () => {
+    curtime.textContent = fmt(audio.currentTime);
+    seek.value = Math.floor(audio.currentTime);
+  });
+
+  // play/pause toggle
+  let isPlaying = false;
+  function togglePlay(){
+    if(audio.paused){
+      audio.play();
+      playBtn.textContent = "❚❚"; // pause icon
+      isPlaying = true;
+    } else {
+      audio.pause();
+      playBtn.textContent = "▶";
+      isPlaying = false;
+    }
+  }
+  playBtn.addEventListener('click', togglePlay);
+
+  // slider interaction
+  seek.addEventListener('input', () => {
+    audio.currentTime = Number(seek.value);
+  });
+
+  // back and forward 5s
+  function moveBy(sec){
+    let t = audio.currentTime + sec;
+    if (t < 0) t = 0;
+    if (t > audio.duration) t = audio.duration;
+    audio.currentTime = t;
+  }
+  back5.addEventListener('click', ()=> moveBy(-10));  // big back
+  rew5.addEventListener('click', ()=> moveBy(-5));    // back 5s
+  fwd5.addEventListener('click', ()=> moveBy(5));     // forward 5s
+  ff5.addEventListener('click', ()=> moveBy(10));     // big forward
+
+  // pause when audio ends
+  audio.addEventListener('ended', () => {
+    playBtn.textContent = "▶";
+    isPlaying = false;
+  });
+})();
+</script>
 </body>
 </html>
