@@ -117,27 +117,49 @@
     position:relative;
     overflow:hidden;
   }
-  .progress > input[type="range"]{
-    -webkit-appearance:none;
-    appearance:none;
-    width:100%;
-    background:transparent;
-    position:relative;
-    height:8px;
-    margin:0;
-  }
-  input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    appearance:none;
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    background:black;
-}; box-shadow:0 2px 6px rgba(0,0,0,0.2); margin-top:-3px;
-  input[type="range"]::-moz-range-thumb{
-    width:14px;height:14px;border-radius:50%; background:var(--accent);
-  }
-  input[type="range"]::-webkit-slider-runnable-track { height:8px; background:transparent; }
+ 
+ /* range track and black thumb (Chrome + Safari) */
+.progress > input[type="range"]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:8px;
+  background: linear-gradient(90deg, #000 var(--seek-percent, 0%), rgba(0,0,0,0.06) var(--seek-percent, 0%));
+  border-radius:999px;
+  outline:none;
+}
+
+/* thumb for webkit browsers */
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#000;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  border:2px solid #ffffff;
+  margin-top:-3px; /* vertically center with track */
+  cursor:pointer;
+}
+
+/* thumb for Firefox */
+input[type="range"]::-moz-range-thumb{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#000;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  border:2px solid #ffffff;
+  cursor:pointer;
+}
+
+/* Firefox track background fallback */
+input[type="range"]::-moz-range-track {
+  height:8px;
+  background: rgba(0,0,0,0.06);
+  border-radius:999px;
+}
 
   /* controls row: single set */
   .controls {
@@ -196,7 +218,7 @@
     <div style="display:flex; gap:8px; justify-content:center;">
       <button id="pw-submit">Unlock</button>
     </div>
-    <div id="pw-error" class="pw-error">Womp womp, try again (unless you not my monkey, GET OUT).</div>
+    <div id="pw-error" class="pw-error">Womp womp, try again 😝 (unless you not my monkey, then GET OUT 🤨)</div>
   </div>
 </div>
 
@@ -333,12 +355,15 @@
     remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
   });
 
-  // update UI as audio plays
   audio.addEventListener('timeupdate', () => {
-    curtime.textContent = fmt(audio.currentTime);
-    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
-    seek.value = Math.floor(audio.currentTime);
-  });
+  curtime.textContent = fmt(audio.currentTime);
+  remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
+  seek.value = Math.floor(audio.currentTime);
+
+  // update CSS variable so the track shows progress (works in modern browsers)
+  const pct = (audio.duration && !isNaN(audio.duration)) ? (audio.currentTime / audio.duration) * 100 : 0;
+  seek.style.setProperty('--seek-percent', pct + '%');
+});
 
   // play/pause toggle
   function setPlayState(playing){
@@ -361,13 +386,14 @@
     }
   });
 
-  // slider interaction
-  seek.addEventListener('input', () => {
-    audio.currentTime = Number(seek.value);
-    // update immediately
-    curtime.textContent = fmt(audio.currentTime);
-    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
-  });
+  // while dragging, show immediate visual fill
+seek.addEventListener('input', () => {
+  audio.currentTime = Number(seek.value);
+  curtime.textContent = fmt(audio.currentTime);
+  remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
+  const pct = (audio.duration && !isNaN(audio.duration)) ? (audio.currentTime / audio.duration) * 100 : 0;
+  seek.style.setProperty('--seek-percent', pct + '%');
+});
 
   // back/forward 10s
   function moveBy(sec){
