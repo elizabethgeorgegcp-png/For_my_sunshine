@@ -270,7 +270,7 @@ input[type="range"]::-moz-range-track {
 </div>
 
 <!-- audio (local file in repo) -->
-<audio id="song" preload="metadata">
+<audio id="song" preload="none">
   <source src="My_sunshine.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
@@ -293,6 +293,8 @@ input[type="range"]::-moz-range-track {
       overlay.style.display = 'none';
       site.style.display = 'flex';
       site.removeAttribute('aria-hidden');
+      audio.pause();
+audio.currentTime = 0;
       // move focus to play button for accessibility
       document.getElementById('playpause').focus();
     } else {
