@@ -1,135 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>For my sunshine ☀️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg:#b8dcf6;          /* base color if image fails */
---wave-fill:#b7defd;   /* slightly darker wave color */
-    --card:#f7fbff;     /* card background */
-    --accent:#1DB954;   /* play button green */
-    --muted:#7f8b92;
-    --shadow: 0 10px 30px rgba(15,23,42,0.12);
-    --black:#0b0b0b;
-  }
-  html,body{
-    height:100%;
-    margin:0;
-   font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    background:
-  linear-gradient(180deg, var(--bg) 0%, rgba(255,255,255,0.6) 100%),
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23b7defd' fill-opacity='1' d='M0,192L48,202.7C96,213,192,235,288,224C384,213,480,171,576,138.7C672,107,768,85,864,106.7C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat center top / cover;
-    color:var(--black);
-  }
+:root{
+  --bg:#b8dcf6;
+  --card:#f7fbff;
+  --shadow:0 10px 30px rgba(15,23,42,0.12);
+}
 
-  /* center page on phone and desktop */
-  .page-wrap{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px 12px;
-    box-sizing:border-box;
-  }
+html,body{
+  height:100%;
+  margin:0;
+  font-family:"Poppins", sans-serif;
+  background: linear-gradient(180deg,var(--bg) 0%,rgba(255,255,255,0.6) 100%);
+  color:#000;
+}
 
-  /* main card that fills phone screen nicely */
-  .card {
-    width:100%;
-    max-width:420px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card));
-    border-radius:28px;
-    box-shadow: var(--shadow);
-    padding:18px;
-    box-sizing:border-box;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
+/* Layout */
+.page-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 12px;
+}
 
-  .cover {
-    width:100%;
-    border-radius:16px;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
-  /* make image smaller (not full height) and keep it responsive */
+.card{
+  width:100%;
+  max-width:420px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.95),var(--card));
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* Image */
+.cover{
+  display:flex;
+  justify-content:center;
+}
 .cover img{
   width:65%;
   height:auto;
-  display:block;
-  border-radius:12px;
-  box-shadow: 0 6px 18px rgba(10,15,25,0.06);
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
-  .meta {
-    padding:4px 6px 0 6px;
-  }
-  .title {
-    font-size:20px;
-    font-weight:800;
-    margin:8px 0 2px 0;
-    text-align:center;
-  }
+/* Title */
+.title{
+  text-align:center;
+  font-weight:500;
+  font-size:20px;
+}
 
-  /* playback container */
-  .player {
-    margin-top:6px;
-    border-radius:14px;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-
-  /* time box row (small box showing current time and time left) */
-  .time-row {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:8px;
-  }
-  .time-box {
+/* Time box */
+.time-box{
   background:white;
   border-radius:10px;
   padding:10px 16px;
-  box-shadow: 0 4px 14px rgba(10,15,25,0.06);
-  font-weight:700;
-  font-size:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.06);
   display:flex;
   justify-content:space-between;
-  width:100%;
+  font-weight:500;
+  font-size:14px;
 }
-  .time-text { min-width:44px; text-align:center; color:var(--black); }
 
-  /* progress bar */
-  .progress {
-    width:100%;
-    height:8px;
-    background:rgba(0,0,0,0.06);
-    border-radius:999px;
-    position:relative;
-    overflow:hidden;
-  }
- 
- /* range track and black thumb (Chrome + Safari) */
-.progress > input[type="range"]{
+/* Slider */
+.progress input{
+  width:100%;
   -webkit-appearance:none;
   appearance:none;
-  width:100%;
   height:8px;
-  background: linear-gradient(90deg, #000 var(--seek-percent, 0%), rgba(0,0,0,0.06) var(--seek-percent, 0%));
   border-radius:999px;
+  background:linear-gradient(90deg,#000 var(--seek-percent,0%),rgba(0,0,0,0.08) var(--seek-percent,0%));
   outline:none;
 }
 
-/* thumb for webkit browsers */
 input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance:none;
   appearance:none;
@@ -137,279 +91,194 @@ input[type="range"]::-webkit-slider-thumb{
   height:14px;
   border-radius:50%;
   background:#000;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
-  border:2px solid #ffffff;
-  margin-top:-3px; /* vertically center with track */
+  border:2px solid white;
   cursor:pointer;
 }
 
-/* thumb for Firefox */
 input[type="range"]::-moz-range-thumb{
   width:14px;
   height:14px;
   border-radius:50%;
   background:#000;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
-  border:2px solid #ffffff;
+  border:2px solid white;
   cursor:pointer;
 }
 
-/* Firefox track background fallback */
-input[type="range"]::-moz-range-track {
-  height:8px;
-  background: rgba(0,0,0,0.06);
-  border-radius:999px;
+/* Controls */
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
 }
 
-  /* controls row: single set */
-  .controls {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:18px;
-  }
-  .btn {
-    width:52px; height:52px; border-radius:50%;
-    background:white; border:none; display:inline-flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 14px rgba(10,15,25,0.06);
-    cursor:pointer; font-size:18px;
-    color:var(--black);
-  }
-  .btn.play {
-    width:74px; height:74px; background:linear-gradient(180deg,#fff,#f3fff6);
-    border-radius:50%;
-    box-shadow: 0 10px 30px rgba(27,185,76,0.12);
-    display:flex; align-items:center; justify-content:center;
-    font-size:28px;
-  }
+.btn{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:white;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 14px rgba(0,0,0,0.06);
+  cursor:pointer;
+}
 
-  .btn svg { width:22px; height:22px; fill:var(--black); pointer-events:none; }
+.btn.play{
+  width:72px;
+  height:72px;
+  font-size:26px;
+}
 
-  /* small screen tweaks */
-  @media (max-width:420px){
-    .card { padding:14px; border-radius:20px; }
-    .title{ font-size:18px; }
-    .btn { width:44px;height:44px; }
-    .btn.play { width:64px;height:64px; font-size:24px; }
-    .cover img { height:240px; }
-  }
+/* Password overlay */
+#pw-overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.35);
+  z-index:9999;
+}
 
-  /* password overlay: centered modal */
-  #pw-overlay {
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.35);
-    z-index:9999;
-  }
-  .pw-modal {
-    background:white; padding:18px; border-radius:12px; width:92%; max-width:360px; text-align:center;
-  }
-  .pw-modal h3 { margin:0 0 8px 0; color:#071019; }
-  .pw-modal input { width:100%; padding:10px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:10px; }
-  .pw-modal button { padding:10px 14px; border-radius:8px; border:none; background:var(--accent); color:white; font-weight:700; cursor:pointer; }
-  .pw-error { color:#b00020; font-weight:600; margin-top:8px; display:none; }
+.pw-modal{
+  background:white;
+  padding:18px;
+  border-radius:12px;
+  width:92%;
+  max-width:360px;
+  text-align:center;
+}
+
+.pw-modal input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  margin-bottom:10px;
+}
+
+.pw-error{
+  color:#b00020;
+  font-weight:600;
+  display:none;
+}
 </style>
 </head>
 <body>
 
-<!-- PASSWORD OVERLAY: content blocked until correct password entered -->
 <div id="pw-overlay">
-  <div class="pw-modal" role="dialog" aria-modal="true" aria-labelledby="pw-title">
-    <h3 id="pw-title">Enter password to view</h3>
-    <input id="pw-input" type="password" placeholder="Password" autocomplete="off" />
-    <div style="display:flex; gap:8px; justify-content:center;">
-      <button id="pw-submit">Unlock</button>
-    </div>
-    <div id="pw-error" class="pw-error">Womp womp, try again 😝 (unless you not my monkey, then GET OUT 🤨)</div>
-  </div>
-</div>
-
-<!-- SITE content -- hidden while pw overlay visible -->
-<div class="page-wrap" id="site" aria-hidden="true" style="display:none;">
-  <div class="card" role="main">
-    <div class="cover" aria-hidden="false">
-      <img id="cover-img" src="My_sunshine.JPG" alt="For my sunshine cover">
-    </div>
-
-    <div class="meta">
-      <div class="title">For my sunshine ☀️</div>
-
-      <div class="player" aria-live="polite">
-        <!-- time row: left = current time listened, right = time left -->
-        <div class="time-row">
-          <div class="time-box">
-  <div id="curtime">0:00</div>
-  <div id="remtime">-0:00</div>
-</div>
-        </div>
-
-        <!-- progress slider -->
-        <div class="progress" aria-hidden="false">
-          <input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek bar" />
-        </div>
-
-        <!-- controls: Back 10s / Play / Forward 10s -->
-        <div class="controls" role="group" aria-label="Playback controls">
-          <button class="btn" id="back10" title="Back 10 seconds" aria-label="Back 10 seconds">
-            <!-- simple double-left icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12L20 4v16l-9-8zM4 4h2v16H4z"></path></svg>
-          </button>
-
-          <button class="btn play" id="playpause" title="Play / Pause" aria-label="Play or pause">
-            <!-- inner text will change (▶ / ❚❚) -->
-            ▶
-          </button>
-
-          <button class="btn" id="fwd10" title="Forward 10 seconds" aria-label="Forward 10 seconds">
-            <!-- simple double-right icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4v16l9-8-9-8zm9 0h2v16h-2z"></path></svg>
-          </button>
-        </div>
-
-      </div>
+  <div class="pw-modal">
+    <h3>Enter password to view</h3>
+    <input id="pw-input" type="password" placeholder="Password">
+    <button id="pw-submit">Unlock</button>
+    <div id="pw-error" class="pw-error">
+      Womp womp, try again 😝 (unless you not my monkey, then GET OUT 🤨)
     </div>
   </div>
 </div>
 
-<!-- audio (local file in repo) -->
+<div class="page-wrap" id="site" style="display:none;">
+  <div class="card">
+
+    <div class="cover">
+      <img src="My_sunshine.JPG">
+    </div>
+
+    <div class="title">For my sunshine ☀️</div>
+
+    <div class="time-box">
+      <div id="curtime">0:00</div>
+      <div id="remtime">-0:00</div>
+    </div>
+
+    <div class="progress">
+      <input id="seek" type="range" min="0" value="0">
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="back10">⏮</button>
+      <button class="btn play" id="playpause">▶</button>
+      <button class="btn" id="fwd10">⏭</button>
+    </div>
+
+  </div>
+</div>
+
 <audio id="song" preload="none">
   <source src="My_sunshine.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <script>
-/* ===== PASSWORD LOGIC =====
-   - site content (#site) is hidden until correct password entered
-*/
 (function(){
-  const PASSWORD = "110323"; // change here if you want a different password
-  const overlay = document.getElementById('pw-overlay');
-  const site = document.getElementById('site');
-  const input = document.getElementById('pw-input');
-  const submit = document.getElementById('pw-submit');
-  const err = document.getElementById('pw-error');
+  const PASSWORD="110323";
+  const overlay=document.getElementById('pw-overlay');
+  const site=document.getElementById('site');
+  const input=document.getElementById('pw-input');
+  const submit=document.getElementById('pw-submit');
+  const err=document.getElementById('pw-error');
 
-  function unlock() {
-    const val = (input.value || "").trim();
-    if (val === PASSWORD) {
-      overlay.style.display = 'none';
-      site.style.display = 'flex';
-      site.removeAttribute('aria-hidden');
+  function unlock(){
+    if(input.value.trim()===PASSWORD){
+      overlay.style.display='none';
+      site.style.display='flex';
       audio.pause();
-audio.currentTime = 0;
-      // move focus to play button for accessibility
-      document.getElementById('playpause').focus();
-    } else {
-      // show error and keep content hidden
-      err.style.display = 'block';
-      input.value = '';
-      input.focus();
+      audio.currentTime=0;
+    }else{
+      err.style.display='block';
+      input.value='';
     }
   }
 
-  submit.addEventListener('click', unlock);
-  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') unlock(); });
-
-  // optional: unlock by URL hash like #pw=110323
-  if (window.location.hash) {
-    const hash = decodeURIComponent(window.location.hash.replace('#',''));
-    if (hash.startsWith('pw=')) {
-      if (hash.slice(3) === PASSWORD) {
-        overlay.style.display = 'none';
-        site.style.display = 'flex';
-        site.removeAttribute('aria-hidden');
-      }
-    }
-  }
+  submit.addEventListener('click',unlock);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
 })();
 
-/* ===== PLAYER LOGIC =====
-   - play/pause
-   - update time listened (left) and time left (right)
-   - seek slider
-   - back/forward 10s controls
-*/
 (function(){
-  const audio = document.getElementById('song');
-  const playBtn = document.getElementById('playpause');
-  const curtime = document.getElementById('curtime');
-  const remtime = document.getElementById('remtime');
-  const seek = document.getElementById('seek');
-  const back10 = document.getElementById('back10');
-  const fwd10 = document.getElementById('fwd10');
+  const audio=document.getElementById('song');
+  const playBtn=document.getElementById('playpause');
+  const cur=document.getElementById('curtime');
+  const rem=document.getElementById('remtime');
+  const seek=document.getElementById('seek');
 
-  // format seconds -> M:SS
   function fmt(s){
-    if(isNaN(s) || s === Infinity) return "0:00";
-    s = Math.max(0, Math.floor(s));
-    const m = Math.floor(s/60);
-    const sec = s % 60;
-    return m + ":" + (sec<10 ? "0"+sec : sec);
+    s=Math.floor(s||0);
+    const m=Math.floor(s/60);
+    const sec=s%60;
+    return m+":"+(sec<10?"0"+sec:sec);
   }
 
-  function fmtRemaining(total, current){
-    if(isNaN(total) || total === Infinity) return "-0:00";
-    const rem = Math.max(0, Math.floor(total - current));
-    return "-" + fmt(rem);
-  }
-
-  // metadata loaded (duration known)
-  audio.addEventListener('loadedmetadata', () => {
-    seek.max = Math.floor(audio.duration) || 0;
-    remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
+  audio.addEventListener('loadedmetadata',()=>{
+    seek.max=Math.floor(audio.duration);
   });
 
-  audio.addEventListener('timeupdate', () => {
-  curtime.textContent = fmt(audio.currentTime);
-  remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
-  seek.value = Math.floor(audio.currentTime);
+  audio.addEventListener('timeupdate',()=>{
+    cur.textContent=fmt(audio.currentTime);
+    rem.textContent="-"+fmt(audio.duration-audio.currentTime);
+    seek.value=audio.currentTime;
+    const pct=(audio.currentTime/audio.duration)*100||0;
+    seek.style.setProperty('--seek-percent',pct+'%');
+  });
 
-  // update CSS variable so the track shows progress (works in modern browsers)
-  const pct = (audio.duration && !isNaN(audio.duration)) ? (audio.currentTime / audio.duration) * 100 : 0;
-  seek.style.setProperty('--seek-percent', pct + '%');
-});
-
-  // play/pause toggle
-  function setPlayState(playing){
-    if(playing){
-      playBtn.textContent = "❚❚"; // pause icon
-      playBtn.setAttribute('aria-pressed','true');
-    } else {
-      playBtn.textContent = "▶";
-      playBtn.setAttribute('aria-pressed','false');
-    }
-  }
-
-  playBtn.addEventListener('click', () => {
+  playBtn.addEventListener('click',()=>{
     if(audio.paused){
-      audio.play().catch(()=>{ /* autoplay blocked */ });
-      setPlayState(true);
-    } else {
+      audio.play();
+      playBtn.textContent="❚❚";
+    }else{
       audio.pause();
-      setPlayState(false);
+      playBtn.textContent="▶";
     }
   });
 
-  // while dragging, show immediate visual fill
-seek.addEventListener('input', () => {
-  audio.currentTime = Number(seek.value);
-  curtime.textContent = fmt(audio.currentTime);
-  remtime.textContent = fmtRemaining(audio.duration, audio.currentTime);
-  const pct = (audio.duration && !isNaN(audio.duration)) ? (audio.currentTime / audio.duration) * 100 : 0;
-  seek.style.setProperty('--seek-percent', pct + '%');
-});
+  seek.addEventListener('input',()=>{
+    audio.currentTime=seek.value;
+  });
 
-  // back/forward 10s
-  function moveBy(sec){
-    let t = audio.currentTime + sec;
-    if (t < 0) t = 0;
-    if (audio.duration && t > audio.duration) t = audio.duration;
-    audio.currentTime = t;
-  }
-  back10.addEventListener('click', ()=> moveBy(-10));
-  fwd10.addEventListener('click', ()=> moveBy(10));
-
-  // when audio ends, reset play button
-  audio.addEventListener('ended', () => setPlayState(false));
+  document.getElementById('back10').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-10);
+  document.getElementById('fwd10').onclick=()=>audio.currentTime=Math.min(audio.duration,audio.currentTime+10);
 })();
 </script>
+
 </body>
 </html>
