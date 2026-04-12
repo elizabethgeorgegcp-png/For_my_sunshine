@@ -279,7 +279,7 @@ input[type="range"]::-moz-range-track {
    - site content (#site) is hidden until correct password entered
 */
 (function(){
-  const PASSWORD = "110323"; // change here if you want a different password
+  const PASSWORD = "110323!"; // change here if you want a different password
   const overlay = document.getElementById('pw-overlay');
   const site = document.getElementById('site');
   const input = document.getElementById('pw-input');
@@ -307,7 +307,7 @@ input[type="range"]::-moz-range-track {
   submit.addEventListener('click', unlock);
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') unlock(); });
 
-  // optional: unlock by URL hash like #pw=110323
+  // optional: unlock by URL hash like #pw=110323!
   if (window.location.hash) {
     const hash = decodeURIComponent(window.location.hash.replace('#',''));
     if (hash.startsWith('pw=')) {
